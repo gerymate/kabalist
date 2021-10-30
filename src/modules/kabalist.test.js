@@ -8,7 +8,7 @@ describe('Kabalist', () => {
     subject = new Kabalist();
     text = `
     What's the time?
-    It's quarter past midnight.
+    It's quarter-past-midnight.
     Let's do some programming and then go to sleep!
     Heyho
     `;
@@ -23,11 +23,21 @@ describe('Kabalist', () => {
   test('breaks text into sentences', () => {
     sentences = [
       "What's the time",
-      "It's quarter past midnight",
+      "It's quarter-past-midnight",
       "Let's do some programming and then go to sleep",
       "Heyho"
     ]
     expect(subject.sentences()).toEqual(sentences);
+  });
+
+  test('breaks sentences into words', () => {
+    words = [
+      ["What's", "the", "time"],
+      ["It's", "quarter", "past", "midnight"],
+      ["Let's", "do", "some", "programming", "and", "then", "go", "to", "sleep"],
+      ["Heyho"],
+    ]
+    expect(subject.words()).toEqual(words);
   });
 
 });

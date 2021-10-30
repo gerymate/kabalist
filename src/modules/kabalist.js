@@ -1,7 +1,7 @@
 
 const Config = {
   'sentence separators': /\.|\?|!/i,
-  'word separators': /( |\n|-)/i,
+  'word separators': / |\n|-/i,
   'letters': {
     'A': 1,
     'B': 2,
@@ -24,6 +24,12 @@ class Kabalist {
 
   sentences() {
     return this.source_text.split(Config["sentence separators"]).map((s)=>s.trim());
+  }
+
+  words() {
+    return this.sentences().map(
+      (sentence) => sentence.split(Config["word separators"]) 
+    )
   }
 }
 
