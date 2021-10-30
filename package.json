@@ -1,0 +1,16 @@
+{
+  "name": "kabalist",
+  "version": "0.0.1",
+  "description": "A simple HTML5 / JavaScript tool to calculate values of words and sentences",
+  "main": "index.js",
+  "repository": "https://github.com/gerymate/kabalist.git",
+  "author": "Gergely Máté <gerymate@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "jest": "^27.3.1"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
