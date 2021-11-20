@@ -56,14 +56,20 @@ describe('Kabalist', () => {
     expect(subject.all_words()).toEqual(words);
   });
 
-  test('scores a word', () => {
-    expect(subject.score("")).toEqual(0);
-    expect(subject.score("A")).toEqual(1);
-    expect(subject.score("B")).toEqual(2);
-    expect(subject.score("X")).toEqual(0);
-    expect(subject.score("ACB")).toEqual(6);
-    expect(subject.score("bC")).toEqual(5);
-    
+  test('scores a text', () => {
+    expect(subject.scoreWord("")).toEqual(0);
+    expect(subject.scoreWord("A")).toEqual(1);
+    expect(subject.scoreWord("B")).toEqual(2);
+    expect(subject.scoreWord("X")).toEqual(0);
+    expect(subject.scoreWord("ACB")).toEqual(6);
+    expect(subject.scoreWord("bC")).toEqual(5);
+    expect(subject.scoreWord("Beans are healthy, chocholate is ambigous.")).toEqual(15);
+  });
+
+  test('scores each word in a sentence', () => {
+    const sentence = "Beans are healthy, chocholate is ambigous.";
+    expected = [["Beans",3],["are",1],["healthy,",1],["chocholate",7],["is",0],["ambigous.",3]];
+    expect(subject.scoreEachWord(sentence)).toEqual(expected);
   });
 
 });

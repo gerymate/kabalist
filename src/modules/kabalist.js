@@ -27,12 +27,18 @@ class Kabalist {
     )
   }
 
-  score(word) {
+  scoreWord(word) {
     const scoring_table = this.config["letters"];  
     const chars = Array.from(word.toUpperCase());
     const scoreLetter = (letter) => (scoring_table[letter] || 0);
     const scoreCounter = (previousValue, currentValue) => previousValue + scoreLetter(currentValue);    
     return chars.reduce(scoreCounter, 0);
+  }
+
+  scoreEachWord(text) {
+    return this.words(text).map(
+      (item) => [item, this.scoreWord(item)]
+    )
   }
 
 }
