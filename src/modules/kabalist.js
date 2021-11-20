@@ -2,27 +2,18 @@
 class Kabalist {
   constructor(config) {
     this.config = config;
-    this.source_text = "";
   }
 
-  setText(text) {
-    this.source_text = text;
-  }
-
-  getText() {
-    return this.source_text;
-  }
-
-  sentences() {
-    return this.source_text.split(this.config["sentence separators"]).map((s)=>s.trim());
+  sentences(text) {
+    return text.split(this.config["sentence separators"]).map((s)=>s.trim());
   }
 
   words(input) {
     return input.split(this.config["word separators"]);
   }
 
-  all_words() {
-    return this.sentences().map(
+  all_words(text) {
+    return this.sentences(text).map(
       (sentence) => this.words(sentence) 
     )
   }
@@ -39,6 +30,11 @@ class Kabalist {
     return this.words(text).map(
       (item) => [item, this.scoreWord(item)]
     )
+  }
+
+  score(text) {
+    sentences = this.sentences();
+
   }
 
 }

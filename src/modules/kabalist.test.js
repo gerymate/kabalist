@@ -16,28 +16,22 @@ describe('Kabalist', () => {
 
   beforeEach(() => {
     subject = new Kabalist(TestConfig);
+  });
+
+  test('breaks text into sentences', () => {
     text = `
     What's the time?
     It's quarter-past-midnight.
     Let's do some programming and then go to sleep!
     Heyho
     `;
-    subject.setText(text);
-  });
-
-  test('can receive text', () => {
-    subject.setText("Apple");
-    expect(subject.getText()).toBe("Apple");
-  });
-
-  test('breaks text into sentences', () => {
-    sentences = [
+    expected = [
       "What's the time",
       "It's quarter-past-midnight",
       "Let's do some programming and then go to sleep",
       "Heyho"
     ]
-    expect(subject.sentences()).toEqual(sentences);
+    expect(subject.sentences(text)).toEqual(expected);
   });
 
   test('breaks a sentence into words', () => {
@@ -47,13 +41,19 @@ describe('Kabalist', () => {
   });
 
   test('breaks all sentences into words', () => {
+    text = `
+    What's the time?
+    It's quarter-past-midnight.
+    Let's do some programming and then go to sleep!
+    Heyho
+    `;
     words = [
       ["What's", "the", "time"],
       ["It's", "quarter", "past", "midnight"],
       ["Let's", "do", "some", "programming", "and", "then", "go", "to", "sleep"],
       ["Heyho"],
     ]
-    expect(subject.all_words()).toEqual(words);
+    expect(subject.all_words(text)).toEqual(words);
   });
 
   test('scores a text', () => {
@@ -70,6 +70,15 @@ describe('Kabalist', () => {
     const sentence = "Beans are healthy, chocholate is ambigous.";
     expected = [["Beans",3],["are",1],["healthy,",1],["chocholate",7],["is",0],["ambigous.",3]];
     expect(subject.scoreEachWord(sentence)).toEqual(expected);
+  });
+
+  xtest('scores every sentence in an array of sentences', () => {
+    sentences = "Beans are healthy. Chocholate is ambigous but tasty.";
+    expected = [
+      [[["Beans",3],["are",1],["healthy.",1]],23],
+      [[["Chocholate",7],["is",0],["ambigous",3],["but",2],["tasty",1]],34]
+    ];
+    expect(subject.score(sentences)).toEqual(expected);
   });
 
 });
