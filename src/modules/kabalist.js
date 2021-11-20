@@ -1,16 +1,7 @@
 
-const Config = {
-  'sentence separators': /\.|\?|!/i,
-  'word separators': / |\n|-/i,
-  'letters': {
-    'A': 1,
-    'B': 2,
-    'C': 3
-  }
-}
-
 class Kabalist {
-  constructor() {
+  constructor(config) {
+    this.config = config;
     this.source_text = "";
   }
 
@@ -23,14 +14,27 @@ class Kabalist {
   }
 
   sentences() {
-    return this.source_text.split(Config["sentence separators"]).map((s)=>s.trim());
+    return this.source_text.split(this.config["sentence separators"]).map((s)=>s.trim());
   }
 
-  words() {
+  words(input) {
+    return input.split(this.config["word separators"]);
+  }
+
+  all_words() {
     return this.sentences().map(
-      (sentence) => sentence.split(Config["word separators"]) 
+      (sentence) => this.words(sentence) 
     )
   }
+
+  score(word) {
+    const scoring_table = this.config["letters"];  
+    const chars = Array.from(word.toUpperCase());
+    const scoreLetter = (letter) => (scoring_table[letter] || 0);
+    const scoreCounter = (previousValue, currentValue) => previousValue + scoreLetter(currentValue);    
+    return chars.reduce(scoreCounter, 0);
+  }
+
 }
 
 module.exports = Kabalist;
