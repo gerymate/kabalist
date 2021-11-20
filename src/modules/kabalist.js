@@ -5,7 +5,10 @@ class Kabalist {
   }
 
   sentences(text) {
-    return text.split(this.config["sentence separators"]).map((s)=>s.trim());
+    return text
+      .split(this.config["sentence separators"])
+      .map((s)=>s.trim())
+      .filter(sentence => sentence.length > 0);
   }
 
   words(input) {
@@ -18,7 +21,7 @@ class Kabalist {
     )
   }
 
-  scoreWord(word) {
+  scoreText(word) {
     const scoring_table = this.config["letters"];  
     const chars = Array.from(word.toUpperCase());
     const scoreLetter = (letter) => (scoring_table[letter] || 0);
@@ -28,15 +31,20 @@ class Kabalist {
 
   scoreEachWord(text) {
     return this.words(text).map(
-      (item) => [item, this.scoreWord(item)]
+      (item) => [item, this.scoreText(item)]
     )
   }
 
-  score(text) {
-    sentences = this.sentences();
-
+  scoreEachWordAndWhole(text) {
+    return [this.scoreEachWord(text), this.scoreText(text)];
   }
 
+  score(text) {
+    const sentences = this.sentences(text);
+    return sentences.map(
+      (sentence) => this.scoreEachWordAndWhole(sentence)
+    );
+  }
 }
 
 module.exports = Kabalist;

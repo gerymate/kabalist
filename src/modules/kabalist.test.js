@@ -57,13 +57,13 @@ describe('Kabalist', () => {
   });
 
   test('scores a text', () => {
-    expect(subject.scoreWord("")).toEqual(0);
-    expect(subject.scoreWord("A")).toEqual(1);
-    expect(subject.scoreWord("B")).toEqual(2);
-    expect(subject.scoreWord("X")).toEqual(0);
-    expect(subject.scoreWord("ACB")).toEqual(6);
-    expect(subject.scoreWord("bC")).toEqual(5);
-    expect(subject.scoreWord("Beans are healthy, chocholate is ambigous.")).toEqual(15);
+    expect(subject.scoreText("")).toEqual(0);
+    expect(subject.scoreText("A")).toEqual(1);
+    expect(subject.scoreText("B")).toEqual(2);
+    expect(subject.scoreText("X")).toEqual(0);
+    expect(subject.scoreText("ACB")).toEqual(6);
+    expect(subject.scoreText("bC")).toEqual(5);
+    expect(subject.scoreText("Beans are healthy, chocholate is ambigous.")).toEqual(15);
   });
 
   test('scores each word in a sentence', () => {
@@ -72,13 +72,19 @@ describe('Kabalist', () => {
     expect(subject.scoreEachWord(sentence)).toEqual(expected);
   });
 
-  xtest('scores every sentence in an array of sentences', () => {
-    sentences = "Beans are healthy. Chocholate is ambigous but tasty.";
+  test('scores each word in a sentence and the whole sentence also', () => {
+    const sentence = "Beans are healthy, chocholate is ambigous.";
+    expected = [[["Beans",3],["are",1],["healthy,",1],["chocholate",7],["is",0],["ambigous.",3]],15];
+    expect(subject.scoreEachWordAndWhole(sentence)).toEqual(expected);
+  });
+
+  test('scores every sentence in an array of sentences', () => {
+    text = "Beans are healthy. Chocholate is ambigous but tasty.";
     expected = [
-      [[["Beans",3],["are",1],["healthy.",1]],23],
-      [[["Chocholate",7],["is",0],["ambigous",3],["but",2],["tasty",1]],34]
+      [[["Beans",3],["are",1],["healthy",1]], 5],
+      [[["Chocholate",7],["is",0],["ambigous",3],["but",2],["tasty",1]], 13]
     ];
-    expect(subject.score(sentences)).toEqual(expected);
+    expect(subject.score(text)).toEqual(expected);
   });
 
 });
